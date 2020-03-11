@@ -1,9 +1,21 @@
+// using enviroment
+var dotenv = require('dotenv');
+dotenv.config({ path: './bin/enviroment.env' });
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// connection with database
+var dbConfig = require('./configs/db.config');
+var db = require('./models');
+db.sequelize.sync({ force: dbConfig.migrate === 'drop' ? true : false }).then(() => {
+  console.info('Drop and re-sync db.');
+});
+
+// routes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
