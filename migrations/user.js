@@ -1,5 +1,6 @@
 const _ = require('lodash');
 const Sequelize = require('sequelize');
+const DateUtil = require('./../lib/date-util');
 
 module.exports = _.merge({
     type: {
@@ -10,12 +11,6 @@ module.exports = _.merge({
     status: {
         type: Sequelize.ENUM('Enabled', 'Locked', 'Disabled', 'Pending'),
         defaultValue: 'Enabled'
-    },
-    username: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-        unique: true,
-        field: 'user_name'
     },
     password: {
         type: Sequelize.STRING(100),
