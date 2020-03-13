@@ -8,11 +8,6 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'user_id',
             as: 'userId'
         });
-
-        models.Task.belongsTo(models.TaskDetail, {
-            foreignKey: 'task_detail_id',
-            as: 'taskDetailId'
-        });
     }
 
     return Task;

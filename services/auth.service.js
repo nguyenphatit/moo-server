@@ -52,7 +52,7 @@ exports.login = (req, res, next) => {
                     } else {
                         res.status(200).json({
                             code: 'SUCCESS',
-                            token: `Bearer ${token}`
+                            token
                         })
                     }
 
@@ -108,12 +108,5 @@ exports.register = (req, res, next) => {
 }
 
 exports.authenticate = (req, res, next) => {
-    return res.status(200).json({
-        id: req.user.id,
-        email: req.user.email,
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        displayName: req.user.displayName,
-        avatar: req.user.avatar
-    });
+    return res.status(200).json(req.user);
 }

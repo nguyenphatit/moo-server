@@ -22,7 +22,6 @@ db.sequelize = sequelize;
 db.GlobalSetting = require('./global-setting')(sequelize, Sequelize);
 db.User = require('./user')(sequelize, Sequelize);
 db.Task = require('./task')(sequelize, Sequelize);
-db.TaskDetail = require('./task-detail')(sequelize, Sequelize);
 
 Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {
