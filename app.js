@@ -37,7 +37,7 @@ var indexRouter = require('./routes/index');
 var tasksRouter = require('./routes/tasks');
 var authsRouter = require('./routes/auths');
 
-var app = express();
+const app = express();
 
 app.use(passport.initialize());
 require('./configs/passport')(passport);
