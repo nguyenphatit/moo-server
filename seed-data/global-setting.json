@@ -1,0 +1,8 @@
+[
+    {
+        "id": 1,
+        "defaultPageSize": 50,
+        "passwordExpirationDays": 90,
+        "unsuccessfulLoginAttempts": 3
+    }
+]
