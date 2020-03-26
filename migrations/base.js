@@ -8,7 +8,6 @@ module.exports = {
         defaultValue: () => {
             return DateUtil.getUTCDateTime();
         },
-        field: 'created_date'
     },
     updatedDate: {
         type: Sequelize.DATE,
@@ -16,12 +15,10 @@ module.exports = {
         defaultValue: () => {
             return DateUtil.getUTCDateTime();
         },
-        field: 'updated_date'
     },
     isDeleted: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: 0,
-        field: 'is_deleted'
     }
 }

@@ -1,21 +1,21 @@
 // using enviroment
-var dotenv = require('dotenv');
+const dotenv = require('dotenv');
 dotenv.config({ path: './bin/enviroment.env' });
 
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var passport = require('passport');
+const passport = require('passport');
 
-var seedDataHelper = require('./helpers/seed-data-helper');
-var MemoryCacher = require('./lib/memory-cacher');
+const seedDataHelper = require('./helpers/seed-data-helper');
+const MemoryCacher = require('./lib/memory-cacher');
 
 // connection with database
-var dbConfig = require('./configs/db.config');
-var db = require('./models');
+const dbConfig = require('./configs/db.config');
+const db = require('./models');
 
 // sync database
 db.sequelize.sync({ force: dbConfig.migrate === 'drop' ? true : false }).then(() => {
@@ -33,9 +33,10 @@ db.sequelize.sync({ force: dbConfig.migrate === 'drop' ? true : false }).then(()
 
 
 // routes
-var indexRouter = require('./routes/index');
-var tasksRouter = require('./routes/tasks');
-var authsRouter = require('./routes/auths');
+const indexRouter = require('./routes/index');
+const authsRouter = require('./routes/auths');
+const todosRouter = require('./routes/todos');
+const tasksRouter = require('./routes/tasks');
 
 const app = express();
 
@@ -54,6 +55,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/auths', authsRouter);
+app.use('/todos', todosRouter);
 app.use('/tasks', tasksRouter);
 
 // catch 404 and forward to error handler

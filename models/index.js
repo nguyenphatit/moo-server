@@ -21,6 +21,7 @@ db.sequelize = sequelize;
 
 db.GlobalSetting = require('./global-setting')(sequelize, Sequelize);
 db.User = require('./user')(sequelize, Sequelize);
+db.Todo = require('./todo')(sequelize, Sequelize);
 db.Task = require('./task')(sequelize, Sequelize);
 
 Object.keys(db).forEach(modelName => {
