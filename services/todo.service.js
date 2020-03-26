@@ -1,5 +1,6 @@
 'use strict';
 
+const _ = require('lodash');
 const BaseService = require('./base.service');
 const DateUtil = require('./../lib/date-util');
 const Todo = require('./../models').Todo;
@@ -13,7 +14,7 @@ class TodoService extends BaseService {
 
     async search(req, res, next) {
         try {
-            let entities = await this.getModel().findAll({ where: { isDeleted: 0 } });
+            let entities = await this.getAll(this.getModel());
 
             return res.status(200).json({
                 code: 'SUCCESS',
@@ -27,12 +28,13 @@ class TodoService extends BaseService {
 
     async getById(req, res, next) {
         let id = req.params.id;
+        let criteria = {
+            where: { id },
+            include: [{ model: Task, require: false }]
+        };
 
         try {
-            let entity = await this.getModel().findOne({
-                where: { id, isDeleted: 0 },
-                include: [{ model: Task, require: false }]
-            });
+            let entity = await this.getModelById(this.getModel(), criteria);
 
             return res.status(200).json({
                 code: 'SUCCESS',
@@ -80,6 +82,12 @@ class TodoService extends BaseService {
         let id = req.params.id;
 
         try {
+            let tasks = await Task.findAll({ where: { todoId: id } });
+
+            await tasks.forEach(task => {
+                this.save({ isDeleted: 1 }, { id: task.id }, Task);
+            });
+
             let entity = await this.save({ isDeleted: 1 }, { id }, this.getModel());
 
             return res.status(200).json({

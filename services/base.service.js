@@ -1,5 +1,6 @@
 'use strict';
 const MemoryCacher = require('./../lib/memory-cacher');
+const _ = require('lodash');
 
 class BaseService {
 
@@ -10,6 +11,21 @@ class BaseService {
     handlerError(error, res) {
         res.status(error.status || 500);
         throw error;
+    }
+
+    getAll(model, condition) {
+        let criteria = condition || {};
+        criteria.where = criteria.where || {};
+        criteria.where.isDeleted = 0;
+
+        return model.findAll(criteria);
+    }
+
+    getModelById(model, condition) {
+        let criteria = condition || {};
+        criteria.where.isDeleted = 0;
+
+        return model.findOne(criteria);
     }
 
     save(entity, condition, model) {

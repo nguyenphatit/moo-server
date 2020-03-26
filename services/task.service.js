@@ -12,7 +12,7 @@ class TaskService extends BaseService {
 
     async search(req, res, next) {
         try {
-            let entities = await this.getModel().findAll({ where: { isDeleted: 0 } });
+            let entities = await this.getAll(this.getModel());
 
             return res.status(200).json({
                 code: 'SUCCESS',
@@ -26,12 +26,13 @@ class TaskService extends BaseService {
 
     async getById(req, res, next) {
         let id = req.params.id;
+        let criteria = {
+            where: { id, isDeleted: 0 },
+            include: [{ model: Todo, require: false }]
+        };
 
         try {
-            let entity = await this.getModel().findOne({
-                where: { id, isDeleted: 0 },
-                include: [{ model: Todo, require: false }]
-            });
+            let entity = await this.getModelById(this.getModel(), criteria);
 
             return res.status(200).json({
                 code: 'SUCCESS',
