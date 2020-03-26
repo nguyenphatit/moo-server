@@ -13,15 +13,7 @@ class TodoService extends BaseService {
 
     async search(req, res, next) {
         try {
-            let entities = await this.getModel().findAll({
-                includes: [
-                    {
-                        model: Task,
-                        as: 'tasks',
-                    }
-                ],
-                where: { isDeleted: 0 }
-            });
+            let entities = await this.getModel().findAll({ where: { isDeleted: 0 } });
 
             return res.status(200).json({
                 code: 'SUCCESS',
@@ -37,7 +29,10 @@ class TodoService extends BaseService {
         let id = req.params.id;
 
         try {
-            let entity = await this.getModel().findOne({ where: { id, isDeleted: 0 } })
+            let entity = await this.getModel().findOne({
+                where: { id, isDeleted: 0 },
+                include: [{ model: Task, require: false }]
+            });
 
             return res.status(200).json({
                 code: 'SUCCESS',
@@ -49,11 +44,11 @@ class TodoService extends BaseService {
     }
 
     async create(req, res, next) {
-        let { taskName, dueDate, desciption, priority } = req.body;
+        let { todoName, dueDate, desciption, priority } = req.body;
 
         try {
             dueDate = DateUtil.formatDate(dueDate, 'MM/DD/YYYY hh:mm:mm A', true);
-            let entity = await this.save({ taskName, dueDate, desciption, priority }, null, this.getModel());
+            let entity = await this.save({ todoName, dueDate, desciption, priority }, null, this.getModel());
 
             return res.status(200).json({
                 code: 'SUCCESS',
@@ -65,12 +60,12 @@ class TodoService extends BaseService {
     }
 
     async update(req, res, next) {
-        let { taskName, dueDate, desciption, priority } = req.body;
+        let { todoName, dueDate, desciption, priority } = req.body;
         let id = req.params.id;
 
         try {
             dueDate = DateUtil.formatDate(dueDate, 'MM/DD/YYYY hh:mm:mm A', true);
-            let entity = await this.save({ taskName, dueDate, desciption, priority }, { id }, this.getModel());
+            let entity = await this.save({ todoName, dueDate, desciption, priority }, { id }, this.getModel());
 
             return res.status(200).json({
                 code: 'SUCCESS',

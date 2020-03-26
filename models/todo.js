@@ -1,7 +1,7 @@
 const todo = require('./../migrations/todo');
 
 module.exports = (sequelize, Sequelize) => {
-    const Todo = sequelize.define('todos', todo, { timestamps: false });
+    const Todo = sequelize.define('todo', todo, { timestamps: false });
 
     Todo.associate = function (models) {
         models.Todo.belongsTo(models.User, {
@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
         });
 
         models.Todo.hasMany(models.Task, {
-            foreignKey: 'tasks'
+            foreignKey: 'todoId'
         });
     }
 

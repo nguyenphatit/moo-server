@@ -2,7 +2,7 @@ const _ = require('lodash');
 const Sequelize = require('sequelize');
 
 module.exports = _.merge({
-    taskName: {
+    todoName: {
         type: Sequelize.STRING(50),
         allowNull: true,
     },
